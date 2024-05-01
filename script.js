@@ -21,17 +21,17 @@ function returnResult() {
     }
   }
   else if (Uservi!=""&& Usera!=""&&Usert!=""){
-    if (Usert < 0) {
-      document.getElementById("return_vi").innerHTML = "Please check your inputs";
+    if (Usert<0) {
+      document.getElementById("return_vi").innerHTML="Please check your inputs";
     }
     else {
-      Uservf = getVf(Uservi, Usera, Usert);
-      Userx = getXnA(Uservf, Uservi, Usert);
-      document.getElementById("return_vf").innerHTML = "The final velocity is " + parseFloat(Uservf).toPrecision(3) + "m/s.";
-      document.getElementById("return_x").innerHTML = "The displacement is " + parseFloat(Userx).toPrecision(3) + "m.";
+      Uservf=getVf(Uservi,Usera,Usert);
+      Userx=getXnA(Uservf,Uservi,Usert);
+      document.getElementById("return_vf").innerHTML="The final velocity is "+parseFloat(Uservf).toPrecision(3)+"m/s.";
+      document.getElementById("return_x").innerHTML="The displacement is " +parseFloat(Userx).toPrecision(3)+"m.";
     }
   }
-  else if (Uservi != "" && Uservf != "" && Userx != "") {
+  else if (Uservi!="" && Uservf!="" && Userx!="") {
     if (Userx == 0 && Uservf != Uservi || Userx == 0 && Uservf == Uservi || Userx != 0 && Uservf == Uservi || Userx < 0 && Uservf >= Uservi || Userx > 0 && Uservf < Uservi) {
       document.getElementById("return_vi").innerHTML = "Please check your inputs";
     }
