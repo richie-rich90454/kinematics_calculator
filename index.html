@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Kinematics Calculator</title>
-    <script src="script.js"></script>
-    <style>
-      #main {
-        font-family: garamond;
-        text-align: center;
-        margin: auto;
-        background-color: #DE0000;
-        width: 50%;
-        color: #FFF;
-        border-radius: 10px;
-        font-size: 1.5rem;
-      }
-      #head {
-        font-style: italic;
-        font-size: 3rem;
-      }
-      input{
-        border-radius: 20px;
-        font-family: garamond;
-        font-size: 1.5rem;
-      }
-      #calculate {
-        margin-top: 20px;
-        background-color: #00FFFF;
-        font-weight: bold;
-        font-size: 1.5rem;
-        font-family: garamond;
-      }
-      #refresh {
-        margin-top: 20px;
-        background-color: #00FFFF;
-        font-weight: bold;
-        font-size: 1.5rem;
-        font-family: garamond;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="main">
-      <h1 id="head">Kinematics calculator</h1>
-      <p>Initial velocity (m/s):</p>
-      <input type="number" id="initial_velocity" value="">
-      <p>Final velocity (m/s):</p>
-      <input type="number" id="final_velocity">
-      <p>Acceleration (m/s<sup>2</sup>):</p>
-      <input type="number" id="acceleration">
-      <p>Time (sec):</p>
-      <input type="number" id="time">
-      <p>Displacement (m):</p>
-      <input type="number" id="displacement">
-      <br>
-      <input type="button" id="calculate" value="Calculate" onclick="returnResult()">
-      <input type="button" id="refresh" value="Refresh" onclick="clearValues()">
-      <div id="return_vi"></div>
-      <div id="return_vf"></div>
-      <div id="return_a"></div>
-      <div id="return_t"></div>
-      <div id="return_x"></div>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Kinematics Calculator</title>
+        <style>
+            #main{
+                font-family: garamond;
+                text-align: center;
+                margin: auto;
+                background-color: #DE0000;
+                width: 50%;
+                color: #FFF;
+                border-radius: 10px;
+                font-size: 1.5rem;
+            }
+            #head{
+                font-style: italic;
+                font-size: 3rem;
+            }
+            input{
+                border-radius: 20px;
+                font-family: garamond;
+                font-size: 1.5rem;
+            }
+            #calculate{
+                margin-top: 20px;
+                background-color: #00FFFF;
+                font-weight: bold;
+                font-size: 1.5rem;
+                font-family: garamond;
+            }
+            #refresh{
+                margin-top: 20px;
+                background-color: #00FFFF;
+                font-weight: bold;
+                font-size: 1.5rem;
+                font-family: garamond;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1 id="head">Kinematics calculator</h1>
+            <p>Initial velocity (m/s):</p>
+            <input type="number" id="initial_velocity" value="">
+            <p>Final velocity (m/s):</p>
+            <input type="number" id="final_velocity">
+            <p>Acceleration (m/s<sup>2</sup>):</p>
+            <input type="number" id="acceleration">
+            <p>Time (sec):</p>
+            <input type="number" id="time">
+            <p>Displacement (m):</p>
+            <input type="number" id="displacement">
+            <br>
+            <input type="button" id="calculate" value="Calculate" onclick="returnResult()">
+            <input type="button" id="refresh" value="Refresh" onclick="clearValues()">
+            <div id="return_vi"></div>
+            <div id="return_vf"></div>
+            <div id="return_a"></div>
+            <div id="return_t"></div>
+            <div id="return_x"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
