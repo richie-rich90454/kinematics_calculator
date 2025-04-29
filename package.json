@@ -1,0 +1,12 @@
+{
+  "name": "kinematics_calculator",
+  "version": "1.0.0",
+  "description": "A simple kinematics calculator made with HTML, CSS, and JS and served by Node.js",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["kinematics", "velocity", "acceleration", "time", "displacement", "physics", "SUVAT"],
+  "author": "richie-rich90454",
+  "license": "MIT"
+}
