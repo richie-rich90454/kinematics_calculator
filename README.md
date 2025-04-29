@@ -1,0 +1,1 @@
+This project uses the EB Garamond font, licensed under the [SIL Open Font License](OFL-EBGaramond.txt).
