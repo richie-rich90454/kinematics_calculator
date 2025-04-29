@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <script src="script.js" defer></script>
         <title>Kinematics Calculator</title>
         <style>
             @font-face{
@@ -61,8 +62,8 @@
             <p>Displacement (m):</p>
             <input type="number" id="displacement">
             <div>
-                <input type="button" id="calculate" value="Calculate" onclick="returnResult()">
-                <input type="button" id="refresh" value="Refresh" onclick="clearValues()">
+                <input type="button" id="calculate" value="Calculate">
+                <input type="button" id="refresh" value="Refresh">
             </div>
             <div id="return_vi"></div>
             <div id="return_vf"></div>
@@ -70,6 +71,5 @@
             <div id="return_t"></div>
             <div id="return_x"></div>
         </div>
-        <script src="script.js"></script>
     </body>
 </html>

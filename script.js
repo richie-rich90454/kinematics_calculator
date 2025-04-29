@@ -4,65 +4,65 @@ function returnResult(){
     document.getElementById("return_a").innerHTML="";
     document.getElementById("return_t").innerHTML="";
     document.getElementById("return_x").innerHTML="";
-    Uservi=document.getElementById("initial_velocity").value;
-    Uservf=document.getElementById("final_velocity").value;
-    Usera=document.getElementById("acceleration").value;
-    Usert=document.getElementById("time").value;
-    Userx=document.getElementById("displacement").value;
-    if (Uservi!=""&&Uservf!=""&&Usert!=""){
-        if (Usert<0||Usert==0){
+    let userVI=document.getElementById("initial_velocity").value;
+    let userVF=document.getElementById("final_velocity").value;
+    let userA=document.getElementById("acceleration").value;
+    let userT=document.getElementById("time").value;
+    let userX=document.getElementById("displacement").value;
+    if (userVI!==""&&userVF!==""&&userT!==""){
+        if (userT<0||userT==0){
             document.getElementById("return_vi").innerHTML="Please check your inputs";
         }
         else{
-            Usera=getA(Uservf, Uservi, Usert);
-            Userx=getXnA(Uservf, Uservi, Usert);
-            document.getElementById("return_a").innerHTML="The acceleration is "+parseFloat(Usera).toPrecision(3)+"m/s<sup>2</sup>.";
-            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(Userx).toPrecision(3)+"m.";
+            userA=getA(userVF, userVI, userT);
+            userX=getXnA(userVF, userVI, userT);
+            document.getElementById("return_a").innerHTML="The acceleration is "+parseFloat(userA).toPrecision(3)+"m/s<sup>2</sup>.";
+            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m.";
         }
     }
-    else if (Uservi!=""&&Usera!=""&&Usert!=""){
-        if (Usert<0){
+    else if (userVI!==""&&userA!==""&&userT!==""){
+        if (userT<0){
             document.getElementById("return_vi").innerHTML="Please check your inputs";
         }
         else{
-            Uservf=getVf(Uservi, Usera, Usert);
-            Userx=getXnA(Uservf, Uservi, Usert);
-            document.getElementById("return_vf").innerHTML="The final velocity is "+parseFloat(Uservf).toPrecision(3)+"m/s.";
-            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(Userx).toPrecision(3)+"m.";
+            userVF=getVf(userVI, userA, userT);
+            userX=getXnA(userVF, userVI, userT);
+            document.getElementById("return_vf").innerHTML="The final velocity is "+parseFloat(userVF).toPrecision(3)+"m/s.";
+            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m.";
         }
     }
-    else if (Uservi!=""&&Uservf!=""&&Userx!=""){
-        if (Userx==0&&Uservf!=Uservi||Userx==0&&Uservf==Uservi||Userx!=0&&Uservf==Uservi||Userx<0&&Uservf >= Uservi||Userx > 0&&Uservf<Uservi){
+    else if (userVI!==""&&userVF!==""&&userX!==""){
+        if (userX==0&&userVF!==userVI||userX==0&&userVF==userVI||userX!==0&&userVF==userVI||userX<0&&userVF >= userVI||userX > 0&&userVF<userVI){
             document.getElementById("return_vi").innerHTML="Please check your inputs";
         }
         else{
             document.getElementById("return_vi").innerHTML="";
-            Usert=Math.abs(getTfX(Uservf, Uservi, Userx)).toPrecision(3);
-            Usera=getA(Uservf, Uservi, Usert).toPrecision(3);
-            document.getElementById("return_t").innerHTML="The time is "+parseFloat(Usert).toPrecision(3)+"s.";
-            document.getElementById("return_a").innerHTML="The acceleration is "+parseFloat(Usera).toPrecision(3)+"m/s<sup>2</sup>.";
+            userT=Math.abs(getTfX(userVF, userVI, userX)).toPrecision(3);
+            userA=getA(userVF, userVI, userT).toPrecision(3);
+            document.getElementById("return_t").innerHTML="The time is "+parseFloat(userT).toPrecision(3)+"s.";
+            document.getElementById("return_a").innerHTML="The acceleration is "+parseFloat(userA).toPrecision(3)+"m/s<sup>2</sup>.";
         }
     }
-    else if (Uservi!=""&&Uservf!=""&&Usera!=""){
-        if (Uservi<=Uservf&&Usera<0||Uservi >= Uservf&&Usera > 0||Uservi==Uservf&&Usera==0||Uservi==Uservf&&Usera!=0){
+    else if (userVI!==""&&userVF!==""&&userA!==""){
+        if (userVI<=userVF&&userA<0||userVI >= userVF&&userA > 0||userVI==userVF&&userA==0||userVI==userVF&&userA!==0){
             document.getElementById("return_vi").innerHTML="Please check you inputs";
         }
         else{
-            Usert=getT(Uservf, Uservi, Usera);
-            Userx=getXnA(Uservf, Uservi, Usert);
-            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(Userx).toPrecision(3)+"m.";
-            document.getElementById("return_t").innerHTML="The time is "+parseFloat(Usert).toPrecision(3)+"s."
+            userT=getT(userVF, userVI, userA);
+            userX=getXnA(userVF, userVI, userT);
+            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m.";
+            document.getElementById("return_t").innerHTML="The time is "+parseFloat(userT).toPrecision(3)+"s."
         }
     }
-    else if (Uservf!=""&&Usera!=""&&Usert!=""){
-        if (Usert<0){
+    else if (userVF!==""&&userA!==""&&userT!==""){
+        if (userT<0){
             document.getElementById("return_vi").innerHTML="Please check you inputs";
         }
         else{
-            Uservi=getVi(Uservf, Usera, Usert);
-            Userx=getXnA(Uservf, Uservi, Usert);
-            document.getElementById("return_vi").innerHTML="The initial velocity is "+parseFloat(Uservi).toPrecision(3)+"m/s.";
-            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(Userx).toPrecision(3)+"m."
+            userVI=getVi(userVF, userA, userT);
+            userX=getXnA(userVF, userVI, userT);
+            document.getElementById("return_vi").innerHTML="The initial velocity is "+parseFloat(userVI).toPrecision(3)+"m/s.";
+            document.getElementById("return_x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m."
         }
     }
     else{
@@ -91,3 +91,5 @@ function getA(vf, vi, t){
 function getXnA(vf, vi, t){
     return ((parseFloat(vf)+parseFloat(vi))/2)*parseFloat(t);
 }
+document.getElementById("calculate").addEventListener("click", returnResult);
+document.getElementById("refresh").addEventListener("click", clearValues);

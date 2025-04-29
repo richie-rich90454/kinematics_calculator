@@ -5,7 +5,7 @@ let publicDir=path.join(__dirname, "/");
 fastify.register(require("@fastify/static"),{
     root: publicDir,
     prefix: "/",
-    maxAge: "7d",
+    maxAge: "1d",
     immutable: true
 });
 fastify.setNotFoundHandler((request, reply)=>{
