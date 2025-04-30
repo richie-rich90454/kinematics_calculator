@@ -22,6 +22,9 @@
                 --highlight-color: #FADE54;
                 --light-gray: #F8F8F8;
             }
+            body{
+                background-color: var(--light-gray);
+            }
             @font-face{
                 font-family: "EBGaramond";
                 src: url("EBGaramond-VariableFont_wght.ttf") format("truetype");
@@ -30,38 +33,49 @@
             #main{
                 font-family: "EBGaramond";
                 text-align: center;
-                margin: auto;
-                background-color: #DE0000;
-                width: 50%;
-                color: #FFF;
-                border-radius: 10px;
+                margin: .5rem auto;
+                width: 100%;
                 font-size: 1.5rem;
+                border-top: 3px solid #000;
+                border-bottom: 3px solid #000;
+                padding: 1rem;
+                transition: all .5s ease;
+                min-height: 30rem;
             }
             #head{
                 font-style: italic;
                 font-size: 3rem;
             }
             input{
-                border-radius: 20px;
+                border-radius: .223rem;
                 font-family: "EBGaramond";
                 font-size: 1.5rem;
             }
             #calculate{
                 margin-top: 20px;
-                background-color: #00FFFF;
+                background-color: var(--primary-color);
                 font-weight: bold;
                 font-size: 1.5rem;
                 font-family: "EBGaramond";
             }
-            #refresh{
+            #clear{
                 margin-top: 20px;
-                background-color: #00FFFF;
+                background-color: var(--primary-color);
                 font-weight: bold;
                 font-size: 1.5rem;
                 font-family: "EBGaramond";
+            }
+            input{
+                border: 1px solid var(--secondary-color);
             }
             input[type="button"]{
+                transition: all .5s ease;
                 cursor: pointer;
+                color: #FFF;
+                padding: .2rem;
+            }
+            input[type="button"]:hover{
+                transform: scale(1.1);
             }
             h1{
                 font-size: clamp(2rem, 5vw, 3rem);
@@ -74,6 +88,22 @@
                 padding: .8rem;
                 margin: 0;
             }
+            #footer{
+                text-align: center;
+                background-color: var(--primary-color);
+                color: #FFF;
+                padding: 1rem;
+                font-size: clamp(1rem, 1.5vw, 1.2rem);
+            }
+            a{
+                color: var(--tertiary-color);
+            }
+            h2{
+                color: var(--primary-color);
+            }
+            #return-group{
+                min-height: 8.5rem;
+            }
         </style>
     </head>
     <body>
@@ -84,9 +114,9 @@
             <div id="main">
                 <h2 id="head">Kinematics calculator</h2>
                 <p>Initial velocity (m/s):</p>
-                <input type="number" id="initial_velocity">
+                <input type="number" id="initial-velocity">
                 <p>Final velocity (m/s):</p>
-                <input type="number" id="final_velocity">
+                <input type="number" id="final-velocity">
                 <p>Acceleration (m/s<sup>2</sup>):</p>
                 <input type="number" id="acceleration">
                 <p>Time (sec):</p>
@@ -95,17 +125,22 @@
                 <input type="number" id="displacement">
                 <div>
                     <input type="button" id="calculate" value="Calculate">
-                    <input type="button" id="refresh" value="Refresh">
+                    <input type="button" id="clear" value="Clear">
                 </div>
-                <div id="return_vi"></div>
-                <div id="return_vf"></div>
-                <div id="return_a"></div>
-                <div id="return_t"></div>
-                <div id="return_x"></div>
+                <div id="return-group">
+                    <div id="return-vi"></div>
+                    <div id="return-vf"></div>
+                    <div id="return-a"></div>
+                    <div id="return-t"></div>
+                    <div id="return-x"></div>
+                </div>
             </div>
         </main>
         <footer>
-
+            <div id="footer">
+                <p>&copy; 2025 Richard's Blogs | All Rights Reserved</p>
+                <p>Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
+            </div>
         </footer>
     </body>
 </html>
