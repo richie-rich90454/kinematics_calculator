@@ -79,6 +79,7 @@
                 transform: scale(1.1);
             }
             h1{
+                font-family: "EBGaramond";
                 font-size: clamp(2rem, 5vw, 3rem);
                 text-transform: uppercase;
                 text-align: center;
@@ -90,6 +91,7 @@
                 margin: 0;
             }
             #footer{
+                font-family: "EBGaramond";
                 text-align: center;
                 background-color: var(--primary-color);
                 color: #FFF;
@@ -120,8 +122,8 @@
                 <input type="number" id="final-velocity">
                 <p>Acceleration (m/s<sup>2</sup>):</p>
                 <input type="number" id="acceleration">
-                <p>Time (sec):</p>
-                <input type="number" id="time">
+                <p>Time (s):</p>
+                <input type="number" id="time" min="0">
                 <p>Displacement (m):</p>
                 <input type="number" id="displacement">
                 <div>

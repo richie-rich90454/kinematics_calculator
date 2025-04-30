@@ -90,6 +90,11 @@ function clearValues(){
     userA.value=null;
     userT.value=null;
     userX.value=null;
+    document.getElementById("return-vi").innerHTML="";
+    document.getElementById("return-vf").innerHTML="";
+    document.getElementById("return-a").innerHTML="";
+    document.getElementById("return-t").innerHTML="";
+    document.getElementById("return-x").innerHTML="";
 }
 function getVf(vi, a, t){
     return parseFloat(vi)+(parseFloat(a)*parseFloat(t));
