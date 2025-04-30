@@ -40,10 +40,9 @@ function returnResult(){
         let xCalc=getX(vfCalc, vi, t);
         showResult("vf", vfCalc, "m/s");
         showResult("x", xCalc, "m");
-
     }
     else if (vi!==null&&vf!==null&&x!==null&&a==null&&t==null){
-        let denom=vf+vi;
+        let denom=vi+vf;
         if (denom==0){
             showError("return-t", "Division by zero.");
             return;
@@ -58,15 +57,22 @@ function returnResult(){
         showResult("a", aCalc, "m/s²");
     }
     else if (vi!==null&&vf!==null&&a!==null&&t==null&&x==null){
-        if (a==0&&vf!==vi){
-            showError("return-a", "Acceleration zero with changing velocity.");
+        if (a==0){
+            if (vf!==vi){
+                showError("return-a", "Acceleration zero with changing velocity.");
+                return;
+            }
+            showError("return-t", "Time indeterminate when acceleration is zero and velocities are equal.");
             return;
         }
         let tCalc=getT(vf, vi, a);
+        if (tCalc<0){
+            showError("return-t", "Time is negative.");
+            return;
+        }
         let xCalc=getX(vf, vi, tCalc);
         showResult("t", tCalc, "s");
         showResult("x", xCalc, "m");
-
     }
     else if (vf!==null&&a!==null&&t!==null&&vi==null&&x==null){
         if (t<0){
@@ -77,7 +83,126 @@ function returnResult(){
         let xCalc=getX(vf, viCalc, t);
         showResult("vi", viCalc, "m/s");
         showResult("x", xCalc, "m");
-
+    }
+    else if (vi!==null&&a!==null&&x!==null&&vf==null&&t==null){
+        if (a==0){
+            if (vi==0){
+                if (x==0){
+                    let tCalc=0;
+                    let vfCalc=vi;
+                    showResult("t", tCalc, "s");
+                    showResult("vf", vfCalc, "m/s");
+                }
+                else{
+                    showError("return-x", "Displacement non-zero with zero velocity and acceleration.");
+                    return;
+                }
+            }
+            else{
+                let tCalc=x/vi;
+                if (tCalc<0){
+                    showError("return-t", "Time is negative.");
+                    return;
+                }
+                let vfCalc=vi;
+                showResult("t", tCalc, "s");
+                showResult("vf", vfCalc, "m/s");
+            }
+        }
+        else{
+            let discriminant=vi*vi+2*a*x;
+            if (discriminant<0){
+                showError("return-t", "No real solution for time.");
+                return;
+            }
+            let sqrtD=Math.sqrt(discriminant);
+            let t1=(-vi+sqrtD)/a;
+            let t2=(-vi-sqrtD)/a;
+            let positiveTs=[t1, t2].filter(t=>t >= 0);
+            if (positiveTs.length==0){
+                showError("return-t", "No positive time solution.");
+                return;
+            }
+            let tCalc=Math.min(...positiveTs);
+            let vfCalc=getVf(vi, a, tCalc);
+            showResult("t", tCalc, "s");
+            showResult("vf", vfCalc, "m/s");
+        }
+    }
+    else if (vf!==null&&a!==null&&x!==null&&vi==null&&t==null){
+        if (a==0){
+            if (vf==0){
+                if (x==0){
+                    let tCalc=0;
+                    let viCalc=vf;
+                    showResult("t", tCalc, "s");
+                    showResult("vi", viCalc, "m/s");
+                }
+                else{
+                    showError("return-x", "Displacement non-zero with zero velocity and acceleration.");
+                    return;
+                }
+            }
+            else{
+                let tCalc=x/vf;
+                if (tCalc<0){
+                    showError("return-t", "Time is negative.");
+                    return;
+                }
+                let viCalc=vf;
+                showResult("t", tCalc, "s");
+                showResult("vi", viCalc, "m/s");
+            }
+        }
+        else{
+            let discriminant=vf*vf-2*a*x;
+            if (discriminant<0){
+                showError("return-t", "No real solution for time.");
+                return;
+            }
+            let sqrtD=Math.sqrt(discriminant);
+            let t1=(vf-sqrtD)/a;
+            let t2=(vf+sqrtD)/a;
+            let positiveTs=[t1, t2].filter(t=>t >= 0);
+            if (positiveTs.length==0){
+                showError("return-t", "No positive time solution.");
+                return;
+            }
+            let tCalc=Math.min(...positiveTs);
+            let viCalc=getVi(vf, a, tCalc);
+            showResult("t", tCalc, "s");
+            showResult("vi", viCalc, "m/s");
+        }
+    }
+    else if (vi!==null&&t!==null&&x!==null&&vf==null&&a==null){
+        if (t<=0){
+            showError("return-t", "Time must be positive.");
+            return;
+        }
+        let aCalc=2*(x-vi*t)/(t*t);
+        let vfCalc=getVf(vi, aCalc, t);
+        showResult("a", aCalc, "m/s²");
+        showResult("vf", vfCalc, "m/s");
+    }
+    else if (vf!==null&&t!==null&&x!==null&&vi==null&&a==null){
+        if (t<=0){
+            showError("return-t", "Time must be positive.");
+            return;
+        }
+        let aCalc=2*(vf*t-x)/(t*t);
+        let viCalc=getVi(vf, aCalc, t);
+        showResult("a", aCalc, "m/s²");
+        showResult("vi", viCalc, "m/s");
+    }
+    else if (a!==null&&t!==null&&x!==null&&vi==null&&vf==null){
+        if (t<=0){
+            showError("return-t", "Time must be positive.");
+            return;
+        }
+        let viCalc=(x-0.5*a*t*t)/t;
+        let vfCalc=getVf(viCalc, a, t);
+        showResult("vi", viCalc, "m/s");
+        showResult("vf", vfCalc, "m/s");
     }
     else{
         showError("return-vi", "Unable to compute. Check your inputs.");
