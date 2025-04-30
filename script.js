@@ -1,109 +1,123 @@
 function returnResult(){
-    document.getElementById("return-vi").innerHTML="";
-    document.getElementById("return-vf").innerHTML="";
-    document.getElementById("return-a").innerHTML="";
-    document.getElementById("return-t").innerHTML="";
-    document.getElementById("return-x").innerHTML="";
-    let userVI=document.getElementById("initial-velocity").value;
-    let userVF=document.getElementById("final-velocity").value;
-    let userA=document.getElementById("acceleration").value;
-    let userT=document.getElementById("time").value;
-    let userX=document.getElementById("displacement").value;
-    if (userVI!==""&&userVF!==""&&userT!==""){
-        if (userT<0||userT==0){
-            document.getElementById("return-vi").innerHTML="Please check your inputs";
-        }
-        else{
-            userA=getA(userVF, userVI, userT);
-            userX=getXnA(userVF, userVI, userT);
-            document.getElementById("return-a").innerHTML="The acceleration is "+parseFloat(userA).toPrecision(3)+"m/s<sup>2</sup>.";
-            document.getElementById("return-x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m.";
-        }
+    ["return-vi", "return-vf", "return-a", "return-t", "return-x"].forEach(id=>{
+        document.getElementById(id).innerHTML="";
+    });
+    let userVI=document.getElementById("initial-velocity").value.trim();
+    let userVF=document.getElementById("final-velocity").value.trim();
+    let userA=document.getElementById("acceleration").value.trim();
+    let userT=document.getElementById("time").value.trim();
+    let userX=document.getElementById("displacement").value.trim();
+    let vi=userVI==""?null:parseFloat(userVI);
+    let vf=userVF==""?null:parseFloat(userVF);
+    let a=userA==""?null:parseFloat(userA);
+    let t=userT==""?null:parseFloat(userT);
+    let x=userX==""?null:parseFloat(userX);
+    function showError(fieldId, message){
+        document.getElementById(fieldId).innerHTML=message;
     }
-    else if (userVI!==""&&userA!==""&&userT!==""){
-        if (userT<0){
-            document.getElementById("return-vi").innerHTML="Please check your inputs";
-        }
-        else{
-            userVF=getVf(userVI, userA, userT);
-            userX=getXnA(userVF, userVI, userT);
-            document.getElementById("return-vf").innerHTML="The final velocity is "+parseFloat(userVF).toPrecision(3)+"m/s.";
-            document.getElementById("return-x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m.";
-        }
+    let provided ={ vi, vf, a, t, x };
+    let count=Object.values(provided).filter(v=>v!==null).length;
+    if (count<3){
+        showError("return-vi", "Please provide at least three values.");
+        return;
     }
-    else if (userVI!==""&&userVF!==""&&userX!==""){
-        if (userX==0&&userVF!==userVI||userX==0&&userVF==userVI||userX!==0&&userVF==userVI||userX<0&&userVF >= userVI||userX > 0&&userVF<userVI){
-            document.getElementById("return-vi").innerHTML="Please check your inputs";
+    if (vi!==null&&vf!==null&&t!==null&&a==null&&x==null){
+        if (t<=0){
+            showError("return-t", "Time must be greater than zero.");
+            return;
         }
-        else{
-            document.getElementById("return-vi").innerHTML="";
-            userT=Math.abs(getTfX(userVF, userVI, userX)).toPrecision(3);
-            userA=getA(userVF, userVI, userT).toPrecision(3);
-            document.getElementById("return-t").innerHTML="The time is "+parseFloat(userT).toPrecision(3)+"s.";
-            document.getElementById("return-a").innerHTML="The acceleration is "+parseFloat(userA).toPrecision(3)+"m/s<sup>2</sup>.";
-        }
+        let aCalc=getA(vf, vi, t);
+        let xCalc=getX(vf, vi, t);
+        showResult("a", aCalc, "m/s²");
+        showResult("x", xCalc, "m");
     }
-    else if (userVI!==""&&userVF!==""&&userA!==""){
-        if (userVI<=userVF&&userA<0||userVI >= userVF&&userA > 0||userVI==userVF&&userA==0||userVI==userVF&&userA!==0){
-            document.getElementById("return-vi").innerHTML="Please check you inputs";
+    else if (vi!==null&&a!==null&&t!==null&&vf==null&&x==null){
+        if (t<0){
+            showError("return-t", "Time must be non-negative.");
+            return;
         }
-        else{
-            userT=getT(userVF, userVI, userA);
-            userX=getXnA(userVF, userVI, userT);
-            document.getElementById("return-x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m.";
-            document.getElementById("return-t").innerHTML="The time is "+parseFloat(userT).toPrecision(3)+"s."
-        }
+        let vfCalc=getVf(vi, a, t);
+        let xCalc=getX(vfCalc, vi, t);
+        showResult("vf", vfCalc, "m/s");
+        showResult("x", xCalc, "m");
+
     }
-    else if (userVF!==""&&userA!==""&&userT!==""){
-        if (userT<0){
-            document.getElementById("return-vi").innerHTML="Please check you inputs";
+    else if (vi!==null&&vf!==null&&x!==null&&a==null&&t==null){
+        let denom=vf+vi;
+        if (denom==0){
+            showError("return-t", "Division by zero.");
+            return;
         }
-        else{
-            userVI=getVi(userVF, userA, userT);
-            userX=getXnA(userVF, userVI, userT);
-            document.getElementById("return-vi").innerHTML="The initial velocity is "+parseFloat(userVI).toPrecision(3)+"m/s.";
-            document.getElementById("return-x").innerHTML="The displacement is "+parseFloat(userX).toPrecision(3)+"m."
+        let tCalc=2*x/denom;
+        if (tCalc<0){
+            showError("return-x", "Inconsistent inputs.");
+            return;
         }
+        let aCalc=getA(vf, vi, tCalc);
+        showResult("t", tCalc, "s");
+        showResult("a", aCalc, "m/s²");
+    }
+    else if (vi!==null&&vf!==null&&a!==null&&t==null&&x==null){
+        if (a==0&&vf!==vi){
+            showError("return-a", "Acceleration zero with changing velocity.");
+            return;
+        }
+        let tCalc=getT(vf, vi, a);
+        let xCalc=getX(vf, vi, tCalc);
+        showResult("t", tCalc, "s");
+        showResult("x", xCalc, "m");
+
+    }
+    else if (vf!==null&&a!==null&&t!==null&&vi==null&&x==null){
+        if (t<0){
+            showError("return-t", "Time must be non-negative.");
+            return;
+        }
+        let viCalc=getVi(vf, a, t);
+        let xCalc=getX(vf, viCalc, t);
+        showResult("vi", viCalc, "m/s");
+        showResult("x", xCalc, "m");
+
     }
     else{
-        document.getElementById("return-vi").innerHTML="Please check your inputs";
+        showError("return-vi", "Unable to compute. Check your inputs.");
     }
 }
-function getTfX(vf, vi, x){
-    return 2*parseFloat(x)/(parseFloat(vf)+parseFloat(vi));
+function showResult(field, value, unit){
+    let el=document.getElementById(`return-${field}`);
+    el.innerHTML=`The ${fieldText(field)} is ${value.toPrecision(3)} ${unit}.`;
 }
-function getVi(vf, a, t){
-    return parseFloat(vf)-(parseFloat(a)*parseFloat(t));
-}
-function getT(vf, vi, a){
-    let vt=parseFloat(vf)-parseFloat(vi);
-    return vt/parseFloat(a);
+function fieldText(field){
+    switch (field){
+        case "vi": return "initial velocity";
+        case "vf": return "final velocity";
+        case "a": return "acceleration";
+        case "t": return "time";
+        case "x": return "displacement";
+    }
 }
 function clearValues(){
-    let userVI=document.getElementById("initial-velocity");
-    let userVF=document.getElementById("final-velocity");
-    let userA=document.getElementById("acceleration");
-    let userT=document.getElementById("time");
-    let userX=document.getElementById("displacement");
-    userVI.value=null;
-    userVF.value=null;
-    userA.value=null;
-    userT.value=null;
-    userX.value=null;
-    document.getElementById("return-vi").innerHTML="";
-    document.getElementById("return-vf").innerHTML="";
-    document.getElementById("return-a").innerHTML="";
-    document.getElementById("return-t").innerHTML="";
-    document.getElementById("return-x").innerHTML="";
+    ["initial-velocity", "final-velocity", "acceleration", "time", "displacement"].forEach(id=>{
+        document.getElementById(id).value="";
+    });
+    ["return-vi", "return-vf", "return-a", "return-t", "return-x"].forEach(id=>{
+        document.getElementById(id).innerHTML="";
+    });
 }
 function getVf(vi, a, t){
-    return parseFloat(vi)+(parseFloat(a)*parseFloat(t));
+    return vi+a*t;
+}
+function getVi(vf, a, t){
+    return vf-a*t;
 }
 function getA(vf, vi, t){
-    return (parseFloat(vf)-parseFloat(vi))/parseFloat(t);
+    return (vf-vi)/t;
 }
-function getXnA(vf, vi, t){
-    return ((parseFloat(vf)+parseFloat(vi))/2)*parseFloat(t);
+function getT(vf, vi, a){
+    return (vf-vi)/a;
+}
+function getX(vf, vi, t){
+    return ((vf+vi)/2)*t;
 }
 document.getElementById("calculate").addEventListener("click", returnResult);
 document.getElementById("clear").addEventListener("click", clearValues);
